@@ -1,8 +1,6 @@
 <?php
 /**
  * LOGIN PAGE: index.php
- * This is the first page the user sees.
- * Note: We use 'body.no-sidebar' in CSS to hide the menu on this page.
  */
 ?>
 <!DOCTYPE html>
@@ -12,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Student Success Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body class="no-sidebar d-flex align-items-center justify-content-center vh-100">
 
@@ -22,7 +20,7 @@
             <p class="text-muted">Please login to access your academic hub</p>
         </div>
 
-        <form action="includes/auth_process.php" method="POST">
+        <form action="../../server/routes/auth_process.php" method="POST">
             <div class="mb-3">
                 <label class="form-label">University Email</label>
                 <input type="email" name="email" class="form-control" placeholder="name@univ.edu" required>

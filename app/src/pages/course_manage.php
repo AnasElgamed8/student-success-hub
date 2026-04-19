@@ -1,9 +1,8 @@
 <?php
 /**
  * COURSE MANAGE: course_manage.php
- * Handles adding or editing a course.
  */
-include 'includes/db_connect.php';
+include '../../server/config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -16,7 +15,6 @@ $course_id = $_GET['id'] ?? null;
 $semester_id = $_GET['semester_id'] ?? null;
 $name = ""; $grade = ""; $credits = "";
 
-// If editing, fetch existing data
 if ($course_id) {
     $res = $conn->query("SELECT * FROM courses WHERE course_id = $course_id");
     if ($row = $res->fetch_assoc()) {
@@ -27,7 +25,6 @@ if ($course_id) {
     }
 }
 
-// Handle Form Submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $semester_id = $_POST['semester_id'];
     $name = $_POST['course_name'];
@@ -47,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Fetch semesters for the dropdown
 $semesters = $conn->query("SELECT * FROM semesters WHERE user_id = $user_id");
 ?>
 
@@ -89,7 +85,7 @@ $semesters = $conn->query("SELECT * FROM semesters WHERE user_id = $user_id");
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Credits</label>
-                            <input type="number" name="credits" class="form-control" value="<?php echo $credits; ?>" required>
+                            <input type="number" name="credits" class="form-//opt/data/home/projects/student_success_hub/app/src/pages/course_manage.phpcontrol" value="<?php echo $credits; ?>" required>
                         </div>
                     </div>
                     <div class="d-flex gap-2">

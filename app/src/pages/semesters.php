@@ -1,9 +1,8 @@
 <?php
 /**
  * SEMESTERS LIST: semesters.php
- * Displays all semesters added by the user.
  */
-include 'includes/db_connect.php';
+include '../../server/config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -42,7 +41,7 @@ $result = $conn->query("SELECT * FROM semesters WHERE user_id = $user_id ORDER B
                             <td class="text-end">
                                 <a href="semester_view.php?id=<?php echo $row['semester_id']; ?>" class="btn btn-sm btn-info text-white">View Details</a>
                                 <a href="semester_manage.php?id=<?php echo $row['semester_id']; ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                <a href="includes/delete_semester.php?id=<?php echo $row['semester_id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                <a href="../../server/routes/delete_semester.php?id=<?php echo $row['semester_id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</a>
                             </td>
                         </tr>
                         <?php endwhile; ?>

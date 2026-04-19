@@ -1,9 +1,8 @@
 <?php
 /**
  * SEMESTER VIEW: semester_view.php
- * The 'Deep Dive' page. Shows all courses for one specific semester.
  */
-include 'includes/db_connect.php';
+include '../../server/config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -19,7 +18,6 @@ if (!$semester_id) {
 
 $user_id = $_SESSION['user_id'];
 
-// 1. Get Semester Info
 $sem_res = $conn->query("SELECT * FROM semesters WHERE semester_id = $semester_id AND user_id = $user_id");
 $semester = $sem_res->fetch_assoc();
 
@@ -27,10 +25,8 @@ if (!$semester) {
     die("Semester not found.");
 }
 
-// 2. Get Courses for this semester
 $courses_res = $conn->query("SELECT * FROM courses WHERE semester_id = $semester_id");
 
-// 3. Calculate Semester GPA
 $total_weighted = 0;
 $total_credits = 0;
 $courses_list = [];
@@ -87,7 +83,7 @@ $semester_gpa = ($total_credits > 0) ? ($total_weighted / $total_credits) : 0;
                             <td><?php echo number_format($course['grade'] * $course['credits'], 2); ?></td>
                             <td class="text-end">
                                 <a href="course_manage.php?id=<?php echo $course['course_id']; ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                <a href="includes/delete_course.php?id=<?php echo $course['course_id']; ?>&redirect=semester_view.php?id=<?php echo $semester_id; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete course?')">Delete</a>
+                                <a href="../../server/routes/delete_course.php?id=<?php echo $course['course_id']; ?>&redirect=semester_view.php?id=<?php echo $semester_id; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete course?')">Delete</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

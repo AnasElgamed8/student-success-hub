@@ -1,7 +1,6 @@
 <?php
 /**
  * REGISTER PAGE: register.php
- * Professional account creation page.
  */
 ?>
 <!DOCTYPE html>
@@ -11,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Student Success Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body class="no-sidebar d-flex align-items-center justify-content-center vh-100">
 
@@ -21,7 +20,7 @@
             <p class="text-muted">Create your account to start tracking your GPA</p>
         </div>
 
-        <form action="includes/auth_process.php" method="POST">
+        <form action="../../server/routes/auth_process.php" method="POST">
             <div class="mb-3">
                 <label class="form-label">Full Name</label>
                 <input type="text" name="full_name" class="form-control" placeholder="Enter your full name" required>

@@ -1,12 +1,10 @@
 <?php
 /**
  * PROFILE PAGE: profile.php
- * Allows users to view and update their basic information.
  */
-include 'includes/db_connect.php';
+include '../../server/config/db_connect.php';
 session_start();
 
-// Protection: If user is not logged in, send them back to login page.
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
@@ -29,7 +27,6 @@ $user = $user_query->fetch_assoc();
         <div class="col-md-4">
             <div class="custom-card text-center">
                 <div class="mb-3">
-                    <!-- Placeholder for a profile image -->
                     <img src="https://ui-avatars.com/api/?name=<?php echo urlencode($user['full_name']); ?>&background=random" 
                          class="rounded-circle shadow-sm" width="120" alt="Profile">
                 </div>
@@ -46,7 +43,7 @@ $user = $user_query->fetch_assoc();
         <div class="col-md-8">
             <div class="custom-card">
                 <h5 class="fw-bold mb-4">Update Information</h5>
-                <form action="includes/profile_update.php" method="POST">
+                <form action="../../server/routes/profile_update.php" method="POST">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Full Name</label>

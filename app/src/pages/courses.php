@@ -1,10 +1,8 @@
 <?php
 /**
  * COURSES LIST: courses.php
- * Displays all courses across all semesters for the logged-in user.
- * Includes a search bar for "easy" extra polish.
  */
-include 'includes/db_connect.php';
+include '../../server/config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -15,7 +13,6 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $search = $_GET['search'] ?? '';
 
-// SQL query to get all courses and their associated semester names
 $query = "SELECT c.*, s.semester_name 
           FROM courses c 
           JOIN semesters s ON c.semester_id = s.semester_id 
@@ -67,7 +64,7 @@ $result = $conn->query($query);
                             <td><?php echo $row['credits']; ?></td>
                             <td class="text-end">
                                 <a href="course_manage.php?id=<?php echo $row['course_id']; ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                <a href="includes/delete_course.php?id=<?php echo $row['course_id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this course?')">Delete</a>
+                                <a href="../../server/routes/delete_course.php?id=<?php echo $row['course_id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this course?')">Delete</a>
                             </td>
                         </tr>
                         <?php endwhile; ?>

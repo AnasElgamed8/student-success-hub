@@ -1,10 +1,8 @@
 <?php
 /**
- * GOAL SIMULATOR: simulator.php
- * The 'Magic' page. Uses sliders to help students plan their future GPA.
- * This is the 'picky-professor-proof' feature.
+ * SIMULATOR PAGE: simulator.php
  */
-include 'includes/db_connect.php';
+include '../../server/config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -14,7 +12,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Get current totals from DB
 $stats_query = $conn->query("
     SELECT 
         SUM(c.credits) as total_credits, 
@@ -41,7 +38,6 @@ $current_weighted_sum = $stats['weighted_sum'] ?? 0;
             <div class="custom-card">
                 <h5 class="fw-bold mb-4">Simulation Controls</h5>
                 
-                <!-- TARGET CGPA SLIDER -->
                 <div class="mb-4">
                     <label class="form-label d-flex justify-content-between">
                         Target CGPA <span id="target-val" class="fw-bold text-primary">3.50</span>
@@ -49,7 +45,6 @@ $current_weighted_sum = $stats['weighted_sum'] ?? 0;
                     <input type="range" class="form-range" id="targetGPA" min="0" max="4" step="0.01" value="3.50" oninput="calculateRequired()">
                 </div>
 
-                <!-- NEXT SEMESTER CREDITS SLIDER -->
                 <div class="mb-4">
                     <label class="form-label d-flex justify-content-between">
                         Next Semester Credits <span id="credits-val" class="fw-bold text-primary">15</span>
@@ -74,24 +69,16 @@ $current_weighted_sum = $stats['weighted_sum'] ?? 0;
 </div>
 
 <script>
-/**
- * SIMULATOR LOGIC
- * This runs entirely in the browser for instant updates.
- */
 function calculateRequired() {
-    // 1. Get values from sliders
     const targetCgpa = parseFloat(document.getElementById('targetGPA').value);
     const nextCredits = parseInt(document.getElementById('nextCredits').value);
     
-    // 2. Update the labels
     document.getElementById('target-val').innerText = targetCgpa.toFixed(2);
     document.getElementById('credits-val').innerText = nextCredits;
 
-    // 3. Get current data from PHP
     const currentCredits = <?php echo $current_credits; ?>;
     const currentWeightedSum = <?php echo $current_weighted_sum; ?>;
 
-    // FORMULA: (TargetGPA * (TotalCredits + NextCredits) - CurrentWeightedSum) / NextCredits
     const totalCreditsAfter = currentCredits + nextCredits;
     const requiredWeightedSum = (targetCgpa * totalCreditsAfter) - currentWeightedSum;
     const requiredGpa = requiredWeightedSum / nextCredits;
@@ -101,24 +88,21 @@ function calculateRequired() {
 
     if (requiredGpa > 4.0) {
         resultElement.innerText = "Impossible";
-        resultElement.classList.replace('text-primary', 'text-danger');
-        msgElement.innerText = "You cannot reach this target with the given credits. Try lowering your target or increasing next semester's credits.";
+        resultElement.className = "display-3 fw-bold text-danger";
+        msgElement.innerText = "You cannot reach this target with the given credits.";
         msgElement.className = "mt-3 fw-medium text-danger";
     } else if (requiredGpa < 0) {
         resultElement.innerText = "Achieved!";
-        resultElement.classList.replace('text-primary', 'text-success');
+        resultElement.className = "display-3 fw-bold text-success";
         msgElement.innerText = "You have already surpassed this target!";
         msgElement.className = "mt-3 fw-medium text-success";
     } else {
         resultElement.innerText = requiredGpa.toFixed(2);
-        resultElement.classList.replace('text-danger', 'text-primary');
-        resultElement.classList.replace('text-success', 'text-primary');
+        resultElement.className = "display-3 fw-bold text-primary";
         msgElement.innerText = `You need a ${requiredGpa.toFixed(2)} GPA in your next ${nextCredits} credits.`;
         msgElement.className = "mt-3 fw-medium text-muted";
     }
 }
-
-// Run once on load to initialize values
 window.onload = calculateRequired;
 </script>
 

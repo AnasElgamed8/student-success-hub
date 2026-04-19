@@ -1,9 +1,8 @@
 <?php
 /**
  * TRANSCRIPT PAGE: transcript.php
- * A clean, printable report of all academic progress.
  */
-include 'includes/db_connect.php';
+include '../../server/config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -15,7 +14,6 @@ $user_id = $_SESSION['user_id'];
 $user_res = $conn->query("SELECT * FROM users WHERE user_id = $user_id");
 $user = $user_res->fetch_assoc();
 
-// Get all semesters and their courses
 $semesters_res = $conn->query("SELECT * FROM semesters WHERE user_id = $user_id ORDER BY semester_id ASC");
 ?>
 

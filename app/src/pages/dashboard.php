@@ -1,10 +1,8 @@
 <?php
 /**
  * DASHBOARD PAGE: dashboard.php
- * The central hub. Shows the overall CGPA and Total Credits.
- * This page uses SQL aggregation (SUM and AVG) to calculate totals.
  */
-include 'includes/db_connect.php';
+include '../../server/config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -14,8 +12,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// SQL query to calculate total credits and weighted CGPA across all semesters
-// Formula: Sum(grade * credits) / Total Credits
 $stats_query = $conn->query("
     SELECT 
         SUM(c.credits) as total_credits, 
@@ -39,7 +35,6 @@ $cgpa = ($total_credits > 0) ? ($weighted_sum / $total_credits) : 0;
         <span class="text-muted">Welcome back, <?php echo $_SESSION['user_name']; ?>!</span>
     </div>
 
-    <!-- STATS ROW -->
     <div class="row g-4 mb-5">
         <div class="col-md-4">
             <div class="custom-card text-center">
@@ -71,7 +66,6 @@ $cgpa = ($total_credits > 0) ? ($weighted_sum / $total_credits) : 0;
         </div>
     </div>
 
-    <!-- QUICK ACTIONS -->
     <div class="row">
         <div class="col-md-12">
             <div class="custom-card">

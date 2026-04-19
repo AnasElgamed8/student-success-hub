@@ -1,9 +1,8 @@
 <?php
 /**
  * SEMESTER MANAGE: semester_manage.php
- * Handles both adding a new semester and editing an existing one.
  */
-include 'includes/db_connect.php';
+include '../../server/config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -16,7 +15,6 @@ $semester_id = $_GET['id'] ?? null;
 $name = "";
 $date = "";
 
-// If editing, fetch existing data
 if ($semester_id) {
     $res = $conn->query("SELECT * FROM semesters WHERE semester_id = $semester_id AND user_id = $user_id");
     if ($row = $res->fetch_assoc()) {
@@ -25,16 +23,13 @@ if ($semester_id) {
     }
 }
 
-// Handle Form Submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['semester_name'];
     $date = $_POST['semester_date'];
 
     if ($semester_id) {
-        // UPDATE
         $sql = "UPDATE semesters SET semester_name = '$name', semester_date = '$date' WHERE semester_id = $semester_id";
     } else {
-        // INSERT
         $sql = "INSERT INTO semesters (user_id, semester_name, semester_date) VALUES ($user_id, '$name', '$date')";
     }
 
