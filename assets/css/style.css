@@ -1,0 +1,114 @@
+/* 
+   PROFESSIONAL ADMIN THEME
+   This file creates the 'look and feel' of a modern dashboard.
+*/
+
+:root {
+    --sidebar-width: 260px;
+    --primary-dark: #1e293b;    /* Deep Navy for the sidebar */
+    --primary-accent: #3b82f6;   /* Bright Blue for active links/buttons */
+    --bg-light: #f8fafc;        /* Very light gray for the main content area */
+    --text-main: #334155;       /* Dark gray for readability */
+    --white: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    margin: 0;
+    display: flex; /* Allows the sidebar and content to sit side-by-side */
+}
+
+/* SIDEBAR STYLING */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--primary-dark);
+    color: var(--white);
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.sidebar-header {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 1.5rem 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-menu li {
+    padding: 0.5rem 1.5rem;
+}
+
+.sidebar-menu a {
+    color: #94a3b8; /* Muted blue-gray */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.sidebar-menu a:hover, .sidebar-menu a.active {
+    background-color: var(--primary-accent);
+    color: var(--white);
+}
+
+/* MAIN CONTENT AREA */
+.main-content {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+    padding: 2rem;
+    transition: var(--transition);
+}
+
+/* CARD STYLING - The 'Professional' look */
+.custom-card {
+    background: var(--white);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* INPUTS AND BUTTONS */
+.form-control {
+    border-radius: 8px;
+    padding: 0.6rem;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-primary {
+    background-color: var(--primary-accent);
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+}
+
+/* UTILITY: Hide sidebar for Login/Register pages */
+body.no-sidebar .sidebar {
+    display: none;
+}
+body.no-sidebar .main-content {
+    margin-left: 0;
+    width: 100%;
+}
